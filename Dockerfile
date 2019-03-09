@@ -7,7 +7,8 @@ RUN apt-get update && apt-get --assume-yes install \
     python-pip \
     groff \
     jq \
-    less
+    less \
+    maven
 
 
 RUN pip  install --upgrade awscli==1.16.106 s3cmd==2.0.1 python-magic && \
