@@ -1,22 +1,18 @@
-FROM openjdk:8u181-jdk-stretch
+FROM maven:3.6-jdk-8-alpine
 MAINTAINER Atley Virdee
 
 # Install base dependencies
-RUN apt-get update && apt-get --assume-yes install \
+RUN apk -v --update add \
     python \
-    python-pip \
+    py-pip \
     groff \
     jq \
     less \
-    maven
-
-
-RUN pip  install --upgrade awscli==1.16.106 s3cmd==2.0.1 python-magic && \
-apt-get --assume-yes purge python-pip
-
-
-RUN  apt-get --assume-yes clean && apt-get --assume-yes autoclean && \
-apt-get --assume-yes autoremove
+    mailcap \
+    && \
+pip install --upgrade awscli==1.16.106 s3cmd==2.0.1 python-magic && \
+apk -v --purge del py-pip && \
+rm /var/cache/apk/*
 
 WORKDIR ~
 ENTRYPOINT /bin/bash
